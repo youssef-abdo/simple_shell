@@ -1,87 +1,46 @@
-#include "shell.h"
-
-/**
- * _strcpy - copies a string
- * @dest: the destination
- * @src: the source
- *
- * Return: pointer to destination
- */
-char *_strcpy(char *dest, char *src)
+int _strlen(char *s)
 {
-	int i = 0;
+    int i = 0;
 
-	if (dest == src || src == 0)
-		return (dest);
-	while (src[i])
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = 0;
-	return (dest);
+    if (!s)
+        return (0);
+
+    while (*s++)
+        i++;
+    return (i);
 }
 
-/**
- * _strdup - duplicates a string
- * @str: the string to duplicate
- *
- * Return: pointer to the duplicated string
- */
-char *_strdup(const char *str)
+int _strcmp(char *s1, char *s2)
 {
-	int length = 0;
-	char *ret;
-
-	if (str == NULL)
-		return (NULL);
-	while (*str++)
-		length++;
-	ret = malloc(sizeof(char) * (length + 1));
-	if (!ret)
-		return (NULL);
-	for (length++; length--;)
-		ret[length] = *--str;
-	return (ret);
+    while (*s1 && *s2)
+    {
+        if (*s1 != *s2)
+            return (*s1 - *s2);
+        s1++;
+        s2++;
+    }
+    if (*s1 == *s2)
+        return (0);
+    else
+        return (*s1 < *s2 ? -1 : 1);
 }
 
-/**
- * _puts - prints an input string
- * @str: the string to be printed
- *
- * Return: Nothing
- */
-void _puts(char *str)
+char *starts_with(const char *haystack, const char *needle)
 {
-	int i = 0;
-
-	if (!str)
-		return;
-	while (str[i] != '\0')
-	{
-		_putchar(str[i]);
-		i++;
-	}
+    while (*needle)
+        if (*needle++ != *haystack++)
+            return (NULL);
+    return ((char *)haystack);
 }
 
-/**
- * _putchar - writes the character c to stdout
- * @c: The character to print
- *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
- */
-int _putchar(char c)
+char *_strcat(char *dest, char *src)
 {
-	static int i;
-	static char buf[WRITE_BUF_SIZE];
+    char *ret = dest;
 
-	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
-	{
-		write(1, buf, i);
-		i = 0;
-	}
-	if (c != BUF_FLUSH)
-		buf[i++] = c;
-	return (1);
+    while (*dest)
+        dest++;
+    while (*src)
+        *dest++ = *src++;
+    *dest = *src;
+    return (ret);
 }
